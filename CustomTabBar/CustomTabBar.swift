@@ -13,6 +13,11 @@ import UIKit
 public struct TabDataObject {
     public let title: String?
     public let imageName: String?
+    
+    public init(title: String?, imageName: String?) {
+        self.title = title
+        self.imageName = imageName
+    }
 }
 
 
