@@ -120,7 +120,7 @@ extension CustomTabBar: TabButtonDelegate {
 }
 
 
-// MARK: - Private methods
+// MARK: - Private functions
 
 private extension CustomTabBar {
     
