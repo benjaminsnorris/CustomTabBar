@@ -10,67 +10,67 @@ import UIKit
 
 // MARK: - Data object struct
 
-struct TabDataObject {
-    let title: String?
-    let imageName: String?
+public struct TabDataObject {
+    public let title: String?
+    public let imageName: String?
 }
 
 
 // MARK: - Custom tab bar protocol and class
 
-protocol CustomTabBarDelegate {
+public protocol CustomTabBarDelegate {
     func tabBar(tabBar: CustomTabBar, didSelectTab tab: Int)
 }
 
-@IBDesignable class CustomTabBar: UIView {
+@IBDesignable public class CustomTabBar: UIView {
     
     // MARK: - Inspectable properties
     
-    @IBInspectable var underlineHeight: CGFloat = 2.0 {
+    @IBInspectable public var underlineHeight: CGFloat = 2.0 {
         didSet {
             underlineHeightConstraint?.constant = underlineHeight
         }
     }
     
-    @IBInspectable var underlineOnBottom: Bool = true {
+    @IBInspectable public var underlineOnBottom: Bool = true {
         didSet {
             configureVerticalPositions()
         }
     }
     
-    @IBInspectable var selectedIndex: Int = 0 {
+    @IBInspectable public var selectedIndex: Int = 0 {
         didSet {
             updateTabs()
         }
     }
     
-    @IBInspectable var accentColor: UIColor = UIColor.blueColor() {
+    @IBInspectable public var accentColor: UIColor = UIColor.blueColor() {
         didSet {
             updateColors()
         }
     }
     
-    @IBInspectable var defaultTitleColor: UIColor = UIColor.blackColor() {
+    @IBInspectable public var defaultTitleColor: UIColor = UIColor.blackColor() {
         didSet {
             updateColors()
         }
     }
     
-    @IBInspectable var lightBackground: Bool = true {
+    @IBInspectable public var lightBackground: Bool = true {
         didSet {
             updateBackground()
         }
     }
     
     
-    // MARK: - Exposed properties
+    // MARK: - Public properties
     
-    var dataObjects: [TabDataObject] = [TabDataObject(title: "one", imageName: nil), TabDataObject(title: "two", imageName: nil)] {
+    public var dataObjects: [TabDataObject] = [TabDataObject(title: "one", imageName: nil), TabDataObject(title: "two", imageName: nil)] {
         didSet {
             configureTabs()
         }
     }
-    var delegate: CustomTabBarDelegate?
+    public var delegate: CustomTabBarDelegate?
     
     
     // MARK: - Private properties
@@ -90,17 +90,17 @@ protocol CustomTabBarDelegate {
     
     // MARK: - Method overrides
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupViews()
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         updateTabs()
     }
