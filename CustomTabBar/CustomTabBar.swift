@@ -196,6 +196,8 @@ private extension CustomTabBar {
     func createButton(dataObject: TabDataObject, atIndex index: Int) {
         let button = TabButton(index: index, dataObject: dataObject)
         button.delegate = self
+        button.selectedColor = accentColor
+        button.unselectedColor = defaultTitleColor
         stackView.addArrangedSubview(button)
         buttons.append(button)
     }
