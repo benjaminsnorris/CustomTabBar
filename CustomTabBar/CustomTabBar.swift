@@ -31,31 +31,31 @@ public protocol CustomTabBarDelegate {
     
     // MARK: - Inspectable properties
     
-    @IBInspectable public var underlineHeight: CGFloat = 2.0 {
-        didSet {
-            underlineHeightConstraint?.constant = underlineHeight
-        }
-    }
-    
-    @IBInspectable public var underlineOnBottom: Bool = true {
-        didSet {
-            configureVerticalPositions()
-        }
-    }
-    
     @IBInspectable public var selectedIndex: Int = 0 {
         didSet {
             updateTabs()
         }
     }
     
-    @IBInspectable public var accentColor: UIColor = UIColor.blueColor() {
+    @IBInspectable public var underlineHeight: CGFloat = 2.0 {
         didSet {
-            updateColors()
+            underlineHeightConstraint?.constant = underlineHeight
         }
     }
     
-    @IBInspectable public var defaultTitleColor: UIColor = UIColor.blackColor() {
+    @IBInspectable public var underlineTop: Bool = false {
+        didSet {
+            configureVerticalPositions()
+        }
+    }
+    
+    @IBInspectable public var shadowTop: Bool = true {
+        didSet {
+            configureVerticalPositions()
+        }
+    }
+    
+    @IBInspectable public var textColor: UIColor = UIColor.blackColor() {
         didSet {
             updateColors()
         }
@@ -108,6 +108,10 @@ public protocol CustomTabBarDelegate {
     public override func layoutSubviews() {
         super.layoutSubviews()
         updateTabs()
+    }
+    
+    public override func tintColorDidChange() {
+        updateColors()
     }
     
 }
@@ -196,8 +200,8 @@ private extension CustomTabBar {
     func createButton(dataObject: TabDataObject, atIndex index: Int) {
         let button = TabButton(index: index, dataObject: dataObject)
         button.delegate = self
-        button.selectedColor = accentColor
-        button.unselectedColor = defaultTitleColor
+        button.selectedColor = tintColor
+        button.unselectedColor = textColor
         stackView.addArrangedSubview(button)
         buttons.append(button)
     }
@@ -211,18 +215,22 @@ private extension CustomTabBar {
     }
     
     func configureVerticalPositions() {
+        if underlineTop {
+            underlineBottomConstraint?.active = false
+            underlineTopConstraint?.active = true
+        } else {
+            underlineBottomConstraint?.active = true
+            underlineTopConstraint?.active = false
+        }
+        
         let shadowHeight = 0.5
         let shadowWidth = 0.0
 
         let shadowOffset: CGSize
-        if underlineOnBottom {
-            underlineBottomConstraint?.active = true
-            underlineTopConstraint?.active = false
-            shadowOffset = CGSize(width: shadowWidth, height: shadowHeight)
-        } else {
-            underlineBottomConstraint?.active = false
-            underlineTopConstraint?.active = true
+        if shadowTop {
             shadowOffset = CGSize(width: shadowWidth, height: -shadowHeight)
+        } else {
+            shadowOffset = CGSize(width: shadowWidth, height: shadowHeight)
         }
         
         layer.shadowOffset = shadowOffset
@@ -232,10 +240,10 @@ private extension CustomTabBar {
     }
     
     func updateColors() {
-        underline.backgroundColor = accentColor
+        underline.backgroundColor = tintColor
         for button in buttons {
-            button.unselectedColor = defaultTitleColor
-            button.selectedColor = accentColor
+            button.unselectedColor = textColor
+            button.selectedColor = tintColor
         }
     }
     
