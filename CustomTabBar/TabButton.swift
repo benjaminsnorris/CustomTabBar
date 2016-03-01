@@ -97,6 +97,8 @@ private extension TabButton {
             titleLabel.textAlignment = .Center
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Vertical)
         }
+        titleLabel.adjustsFontSizeToFitWidth = true
+        titleLabel.minimumScaleFactor = 0.9
         
         button.addTarget(self, action: "buttonTouched", forControlEvents: .TouchUpInside)
         addFullSize(button)
