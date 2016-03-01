@@ -85,9 +85,8 @@ private extension TabButton {
         stackView.spacing = 1.0
         
         if let imageName = dataObject.imageName, image = UIImage(named: imageName) {
-            let templateImage = image.imageWithRenderingMode(.AlwaysTemplate)
             stackView.addArrangedSubview(imageView)
-            imageView.image = templateImage
+            imageView.image = image
             imageView.contentMode = .ScaleAspectFit
             titleLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
         }
