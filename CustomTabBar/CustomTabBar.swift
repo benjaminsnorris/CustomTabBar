@@ -43,6 +43,14 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    @IBInspectable public var internalMargin: CGFloat = 0.0 {
+        didSet {
+            stackViewTopConstraint?.constant = internalMargin
+            stackViewBottomConstraint?.constant = internalMargin
+            stackView.spacing = internalMargin
+        }
+    }
+    
     @IBInspectable public var underlineTop: Bool = false {
         didSet {
             configureVerticalPositions()
@@ -83,6 +91,9 @@ public protocol CustomTabBarDelegate {
     private var lightBackgroundBlur: UIVisualEffectView!
     private var darkBackgroundBlur: UIVisualEffectView!
     private let stackView = UIStackView()
+    private var stackViewTopConstraint: NSLayoutConstraint?
+    private var stackViewBottomConstraint: NSLayoutConstraint?
+    
     private var buttons = [TabButton]()
     
     private let underline = UIView()
@@ -147,7 +158,11 @@ private extension CustomTabBar {
         setupFullSize(darkBackgroundBlur)
         
         stackView.distribution = .FillEqually
-        setupFullSize(stackView)
+        setupFullWidth(stackView)
+        stackViewTopConstraint = stackView.topAnchor.constraintEqualToAnchor(topAnchor, constant: internalMargin)
+        stackViewTopConstraint?.active = true
+        stackViewBottomConstraint = bottomAnchor.constraintEqualToAnchor(stackView.bottomAnchor, constant: internalMargin)
+        stackViewBottomConstraint?.active = true
         
         underline.translatesAutoresizingMaskIntoConstraints = false
         addSubview(underline)
@@ -170,12 +185,16 @@ private extension CustomTabBar {
     }
     
     func setupFullSize(view: UIView) {
+        setupFullWidth(view)
+        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
+        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+    }
+    
+    func setupFullWidth(view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
         view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
     }
     
     func configureTabs() {
