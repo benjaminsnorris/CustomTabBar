@@ -22,17 +22,22 @@ class TabButton: UIView {
     
     var selected = false {
         didSet {
-        updateColors()
+            updateColors()
         }
     }
     var unselectedColor: UIColor = .blackColor() {
         didSet {
-        updateColors()
+            updateColors()
         }
     }
     var selectedColor: UIColor = .blueColor() {
         didSet {
-        updateColors()
+            updateColors()
+        }
+    }
+    var inset: CGFloat = 0.0 {
+        didSet {
+            updateInsets()
         }
     }
     
@@ -40,7 +45,7 @@ class TabButton: UIView {
     // MARK: - Private properties
     
     private let stackView = UIStackView()
-    private let imageView = UIImageView()
+    private let imageButton = UIButton()
     private let titleLabel = UILabel()
     private let button = UIButton()
     
@@ -85,9 +90,9 @@ private extension TabButton {
         stackView.spacing = 1.0
         
         if let imageName = dataObject.imageName, image = UIImage(named: imageName) {
-            stackView.addArrangedSubview(imageView)
-            imageView.image = image
-            imageView.contentMode = .ScaleAspectFit
+            stackView.addArrangedSubview(imageButton)
+            imageButton.setImage(image, forState: .Normal)
+            imageButton.contentMode = .ScaleAspectFit
             titleLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
         }
         if let title = dataObject.title {
@@ -106,7 +111,7 @@ private extension TabButton {
     
     func updateColors() {
         titleLabel.textColor = selected ? selectedColor : unselectedColor
-        imageView.tintColor = selected ? selectedColor : unselectedColor
+        imageButton.tintColor = selected ? selectedColor : unselectedColor
     }
     
     func addFullSize(view: UIView, withMargin margin: Bool = false) {
@@ -116,6 +121,10 @@ private extension TabButton {
         view.topAnchor.constraintEqualToAnchor(topAnchor, constant: margin ? TabButton.margin : 0).active = true
         view.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: margin ? -TabButton.margin : 0).active = true
         view.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: margin ? -TabButton.margin : 0).active = true
+    }
+    
+    func updateInsets() {
+        imageButton.imageEdgeInsets = UIEdgeInsetsMake(inset, inset, inset, inset)
     }
     
 }
