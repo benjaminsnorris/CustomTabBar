@@ -93,7 +93,7 @@ private extension TabButton {
             stackView.addArrangedSubview(imageButton)
             imageButton.setImage(image, forState: .Normal)
             imageButton.imageView?.contentMode = .ScaleAspectFit
-            titleLabel.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize())
+            titleLabel.font = UIFont.systemFontOfSize(10)
         }
         if let title = dataObject.title {
             stackView.addArrangedSubview(titleLabel)
