@@ -81,6 +81,12 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    @IBInspectable public var darkBackground: Bool = false {
+        didSet {
+            updateBackground()
+        }
+    }
+    
     
     // MARK: - Public properties
     
@@ -278,7 +284,7 @@ private extension CustomTabBar {
     
     func updateBackground() {
         lightBackgroundBlur.hidden = !lightBackground
-        darkBackgroundBlur.hidden = lightBackground
+        darkBackgroundBlur.hidden = !darkBackground
     }
     
 }
