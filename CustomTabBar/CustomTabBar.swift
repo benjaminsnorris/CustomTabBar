@@ -222,6 +222,7 @@ private extension CustomTabBar {
         button.delegate = self
         button.selectedColor = tintColor
         button.unselectedColor = textColor
+        button.titleFont = titleFont
         stackView.addArrangedSubview(button)
         buttons.append(button)
     }
