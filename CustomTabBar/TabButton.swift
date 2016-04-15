@@ -40,6 +40,11 @@ class TabButton: UIView {
             updateInsets()
         }
     }
+    var titleFont: UIFont = UIFont.systemFontOfSize(16) {
+        didSet {
+            setupViews()
+        }
+    }
     
     
     // MARK: - Private properties
@@ -101,6 +106,7 @@ private extension TabButton {
             titleLabel.textAlignment = .Center
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Vertical)
         }
+        titleLabel.font = titleFont
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.9
         

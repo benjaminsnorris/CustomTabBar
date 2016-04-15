@@ -69,6 +69,12 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    public var titleFont: UIFont = UIFont.systemFontOfSize(16) {
+        didSet {
+            updateTabs()
+        }
+    }
+    
     @IBInspectable public var lightBackground: Bool = true {
         didSet {
             updateBackground()
