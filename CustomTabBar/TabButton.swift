@@ -110,7 +110,7 @@ private extension TabButton {
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.9
         
-        button.addTarget(self, action: "buttonTouched", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(buttonTouched), forControlEvents: .TouchUpInside)
         addFullSize(button)
         updateColors()
     }
