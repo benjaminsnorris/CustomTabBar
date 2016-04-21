@@ -83,7 +83,7 @@ public protocol CustomTabBarDelegate {
         }
     }
     
-    @IBInspectable public var translucentBackground: Bool = false {
+    @IBInspectable public var translucentBackground: Bool = true {
         didSet {
             updateBackground()
         }
@@ -286,8 +286,8 @@ private extension CustomTabBar {
     }
     
     func updateBackground() {
-        lightBackgroundBlur.hidden = !lightBackground || translucentBackground
-        darkBackgroundBlur.hidden = lightBackground || translucentBackground
+        lightBackgroundBlur.hidden = !lightBackground || !translucentBackground
+        darkBackgroundBlur.hidden = lightBackground || !translucentBackground
     }
     
 }
