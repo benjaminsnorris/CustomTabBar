@@ -71,7 +71,6 @@ public protocol CustomTabBarDelegate {
     
     /// Override this property if you need to set a specific font
     /// Defaults to 16 without an icon and 10 with
-    
     public var titleFont: UIFont? = nil {
         didSet {
             updateTabs()
@@ -84,7 +83,7 @@ public protocol CustomTabBarDelegate {
         }
     }
     
-    @IBInspectable public var darkBackground: Bool = false {
+    @IBInspectable public var translucentBackground: Bool = false {
         didSet {
             updateBackground()
         }
@@ -287,8 +286,8 @@ private extension CustomTabBar {
     }
     
     func updateBackground() {
-        lightBackgroundBlur.hidden = !lightBackground
-        darkBackgroundBlur.hidden = !darkBackground
+        lightBackgroundBlur.hidden = !lightBackground || translucentBackground
+        darkBackgroundBlur.hidden = lightBackground || translucentBackground
     }
     
 }
