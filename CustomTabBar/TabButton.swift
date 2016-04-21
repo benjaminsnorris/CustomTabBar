@@ -40,7 +40,7 @@ class TabButton: UIView {
             updateInsets()
         }
     }
-    var titleFont: UIFont = UIFont.systemFontOfSize(16) {
+    var titleFont: UIFont? = nil {
         didSet {
             setupViews()
         }
@@ -93,6 +93,7 @@ private extension TabButton {
         stackView.axis = .Vertical
         addFullSize(stackView, withMargin: true)
         stackView.spacing = 1.0
+        titleLabel.font = UIFont.systemFontOfSize(16)
         
         if let imageName = dataObject.imageName, image = UIImage(named: imageName) {
             stackView.addArrangedSubview(imageButton)
@@ -106,7 +107,9 @@ private extension TabButton {
             titleLabel.textAlignment = .Center
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Vertical)
         }
-        titleLabel.font = titleFont
+        if let titleFont = titleFont {
+            titleLabel.font = titleFont
+        }
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.9
         

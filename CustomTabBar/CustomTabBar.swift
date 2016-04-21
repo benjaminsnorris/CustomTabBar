@@ -69,7 +69,10 @@ public protocol CustomTabBarDelegate {
         }
     }
     
-    public var titleFont: UIFont = UIFont.systemFontOfSize(16) {
+    /// Override this property if you need to set a specific font
+    /// Defaults to 16 without an icon and 10 with
+    
+    public var titleFont: UIFont? = nil {
         didSet {
             updateTabs()
         }
