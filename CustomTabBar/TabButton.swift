@@ -93,7 +93,6 @@ private extension TabButton {
         stackView.axis = .Vertical
         addFullSize(stackView, withMargin: true)
         stackView.spacing = 1.0
-        titleLabel.font = UIFont.systemFontOfSize(16)
         
         if let imageName = dataObject.imageName, image = UIImage(named: imageName) {
             stackView.addArrangedSubview(imageButton)
