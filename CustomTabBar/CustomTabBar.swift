@@ -69,7 +69,22 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    /// Override this property if you need to set a specific font
+    /// Defaults to 16 without an icon and 10 with
+    public var titleFont: UIFont? = nil {
+        didSet {
+            updateTabs()
+        }
+    }
+    
     @IBInspectable public var lightBackground: Bool = true {
+        didSet {
+            updateBackground()
+        }
+    }
+    
+    /// Set true for either a light or dark translucent tabBar, false for an opaque tabBar that uses the tabBar's backgroundColor property
+    @IBInspectable public var translucentBackground: Bool = true {
         didSet {
             updateBackground()
         }
@@ -210,6 +225,7 @@ private extension CustomTabBar {
         button.delegate = self
         button.selectedColor = tintColor
         button.unselectedColor = textColor
+        button.titleFont = titleFont
         stackView.addArrangedSubview(button)
         buttons.append(button)
     }
@@ -261,6 +277,7 @@ private extension CustomTabBar {
         }
         for button in buttons {
             button.selected = button.index == selectedIndex
+            button.titleFont = titleFont
         }
         
         let position = frame.size.width / CGFloat(buttons.count) * CGFloat(selectedIndex)
@@ -271,8 +288,8 @@ private extension CustomTabBar {
     }
     
     func updateBackground() {
-        lightBackgroundBlur.hidden = !lightBackground
-        darkBackgroundBlur.hidden = lightBackground
+        lightBackgroundBlur.hidden = !lightBackground || !translucentBackground
+        darkBackgroundBlur.hidden = lightBackground || !translucentBackground
     }
     
 }
