@@ -277,6 +277,7 @@ private extension CustomTabBar {
         }
         for button in buttons {
             button.selected = button.index == selectedIndex
+            button.titleFont = titleFont
         }
         
         let position = frame.size.width / CGFloat(buttons.count) * CGFloat(selectedIndex)
