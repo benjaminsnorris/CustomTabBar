@@ -83,6 +83,7 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    /// Set true for either a light or dark translucent tabBar, false for an opaque tabBar that uses the tabBar's backgroundColor property
     @IBInspectable public var translucentBackground: Bool = true {
         didSet {
             updateBackground()
