@@ -98,7 +98,6 @@ private extension TabButton {
             stackView.addArrangedSubview(imageButton)
             imageButton.setImage(image, forState: .Normal)
             imageButton.imageView?.contentMode = .ScaleAspectFit
-            titleLabel.font = UIFont.systemFontOfSize(10)
         }
         if let title = dataObject.title {
             stackView.addArrangedSubview(titleLabel)
@@ -106,20 +105,29 @@ private extension TabButton {
             titleLabel.textAlignment = .Center
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Vertical)
         }
-        if let titleFont = titleFont {
-            titleLabel.font = titleFont
-        }
+        
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.9
         
         button.addTarget(self, action: #selector(buttonTouched), forControlEvents: .TouchUpInside)
         addFullSize(button)
         updateColors()
+        updateFont()
     }
     
     func updateColors() {
         titleLabel.textColor = selected ? selectedColor : unselectedColor
         imageButton.tintColor = selected ? selectedColor : unselectedColor
+    }
+    
+    func updateFont() {
+        if let titleFont = titleFont {
+            titleLabel.font = titleFont
+        } else if dataObject.imageName != nil {
+            titleLabel.font = UIFont.systemFontOfSize(10)
+        } else {
+            titleLabel.font = UIFont.systemFontOfSize(16)
+        }
     }
     
     func addFullSize(view: UIView, withMargin margin: Bool = false) {
