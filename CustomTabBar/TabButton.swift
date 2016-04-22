@@ -42,7 +42,7 @@ class TabButton: UIView {
     }
     var titleFont: UIFont? = nil {
         didSet {
-            titleLabel.font = titleFont
+            updateFont()
         }
     }
     
