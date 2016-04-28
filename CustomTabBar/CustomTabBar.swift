@@ -208,19 +208,14 @@ private extension CustomTabBar {
         buttons.removeAll()
         
         for (index, dataObject) in dataObjects.enumerate() {
-            createButton(dataObject, atIndex: index)
+            let button = createButton(dataObject, atIndex: index)
+            button.selected = button.index == selectedIndex
         }
         
         configureUnderlineWidth()
-        
-        if !(selectedIndex < buttons.count) {
-            fatalError("Invalid selection for buttons: \(selectedIndex)")
-        }
-        let selectedButton = buttons[selectedIndex]
-        selectedButton.selected = true
     }
     
-    func createButton(dataObject: TabDataObject, atIndex index: Int) {
+    func createButton(dataObject: TabDataObject, atIndex index: Int) -> TabButton {
         let button = TabButton(index: index, dataObject: dataObject)
         button.delegate = self
         button.selectedColor = tintColor
@@ -228,6 +223,7 @@ private extension CustomTabBar {
         button.titleFont = titleFont
         stackView.addArrangedSubview(button)
         buttons.append(button)
+        return button
     }
     
     func configureUnderlineWidth() {
@@ -272,9 +268,6 @@ private extension CustomTabBar {
     }
     
     func updateTabs() {
-        if !(selectedIndex < buttons.count) {
-            fatalError("Invalid index for buttons—selectedIndex: \(selectedIndex)")
-        }
         for button in buttons {
             button.selected = button.index == selectedIndex
             button.titleFont = titleFont
