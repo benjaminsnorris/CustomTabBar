@@ -12,11 +12,11 @@ import UIKit
 
 public struct TabDataObject {
     public let title: String?
-    public let imageName: String?
+    public let image: UIImage?
     
-    public init(title: String?, imageName: String?) {
+    public init(title: String?, image: UIImage?) {
         self.title = title
-        self.imageName = imageName
+        self.image = image
     }
 }
 
@@ -93,7 +93,7 @@ public protocol CustomTabBarDelegate {
     
     // MARK: - Public properties
     
-    public var dataObjects: [TabDataObject] = [TabDataObject(title: "one", imageName: nil), TabDataObject(title: "two", imageName: nil)] {
+    public var dataObjects: [TabDataObject] = [TabDataObject(title: "one", image: nil), TabDataObject(title: "two", image: nil)] {
         didSet {
             configureTabs()
         }

@@ -94,7 +94,7 @@ private extension TabButton {
         addFullSize(stackView, withMargin: true)
         stackView.spacing = 1.0
         
-        if let imageName = dataObject.imageName, image = UIImage(named: imageName) {
+        if let image = dataObject.image {
             stackView.addArrangedSubview(imageButton)
             imageButton.setImage(image, forState: .Normal)
             imageButton.imageView?.contentMode = .ScaleAspectFit
@@ -123,7 +123,7 @@ private extension TabButton {
     func updateFont() {
         if let titleFont = titleFont {
             titleLabel.font = titleFont
-        } else if dataObject.imageName != nil {
+        } else if dataObject.image != nil {
             titleLabel.font = UIFont.systemFontOfSize(10)
         } else {
             titleLabel.font = UIFont.systemFontOfSize(16)
