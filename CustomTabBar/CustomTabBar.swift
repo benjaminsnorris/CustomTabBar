@@ -13,10 +13,12 @@ import UIKit
 public struct TabDataObject {
     public let title: String?
     public let image: UIImage?
+    public let accessibilityTitle: String
     
-    public init(title: String?, image: UIImage?) {
+    public init(title: String?, image: UIImage?, accessibilityTitle: String) {
         self.title = title
         self.image = image
+        self.accessibilityTitle = accessibilityTitle
     }
 }
 
@@ -93,7 +95,7 @@ public protocol CustomTabBarDelegate {
     
     // MARK: - Public properties
     
-    public var dataObjects: [TabDataObject] = [TabDataObject(title: "one", image: nil), TabDataObject(title: "two", image: nil)] {
+    public var dataObjects: [TabDataObject] = [TabDataObject(title: "one", image: nil, accessibilityTitle: "First"), TabDataObject(title: "two", image: nil, accessibilityTitle: "Second")] {
         didSet {
             configureTabs()
         }
@@ -157,6 +159,8 @@ extension CustomTabBar: TabButtonDelegate {
 private extension CustomTabBar {
     
     func setupViews() {
+        isAccessibilityElement = false
+        accessibilityIdentifier = "customTabBar"
         backgroundColor = nil
         
         let lightStyle = UIBlurEffectStyle.ExtraLight
@@ -213,6 +217,7 @@ private extension CustomTabBar {
         }
         
         configureUnderlineWidth()
+//        accessibilityElements = buttons
     }
     
     func createButton(dataObject: TabDataObject, atIndex index: Int) -> TabButton {
@@ -270,6 +275,11 @@ private extension CustomTabBar {
     func updateTabs() {
         for button in buttons {
             button.selected = button.index == selectedIndex
+            if button.selected {
+                button.accessibilityTraits |= UIAccessibilityTraitSelected
+            } else if button.accessibilityTraits | UIAccessibilityTraitSelected == button.accessibilityTraits {
+                button.accessibilityTraits ^= UIAccessibilityTraitSelected
+            }
             button.titleFont = titleFont
         }
         
