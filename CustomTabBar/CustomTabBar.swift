@@ -159,8 +159,6 @@ extension CustomTabBar: TabButtonDelegate {
 private extension CustomTabBar {
     
     func setupViews() {
-        isAccessibilityElement = false
-        accessibilityIdentifier = "customTabBar"
         backgroundColor = nil
         
         let lightStyle = UIBlurEffectStyle.ExtraLight
