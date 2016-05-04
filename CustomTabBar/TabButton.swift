@@ -91,7 +91,7 @@ private extension TabButton {
     func setupAccessibilityInformation() {
         isAccessibilityElement = true
         accessibilityLabel = dataObject.accessibilityTitle.capitalizedString
-        accessibilityIdentifier = dataObject.accessibilityTitle.lowercaseString
+        accessibilityIdentifier = dataObject.accessibilityTitle.lowercaseString + "TabButton"
         accessibilityTraits = UIAccessibilityTraitButton
         imageButton.isAccessibilityElement = false
         button.isAccessibilityElement = false
