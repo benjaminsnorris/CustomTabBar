@@ -92,6 +92,7 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    /// Set *true* for a quick left to right entry animation when the tab bar appears
     @IBInspectable public var animatesIn: Bool = false
     
     
