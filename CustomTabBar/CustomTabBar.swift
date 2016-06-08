@@ -159,8 +159,6 @@ extension CustomTabBar: TabButtonDelegate {
 private extension CustomTabBar {
     
     func setupViews() {
-        backgroundColor = nil
-        
         let lightStyle = UIBlurEffectStyle.ExtraLight
         let lightBlurEffect = UIBlurEffect(style: lightStyle)
         lightBackgroundBlur = UIVisualEffectView(effect: lightBlurEffect)
