@@ -92,7 +92,7 @@ public protocol CustomTabBarDelegate {
         }
     }
     
-    @IBInspectable public var animatesIn: Bool = true
+    @IBInspectable public var animatesIn: Bool = false
     
     
     // MARK: - Public properties
