@@ -92,6 +92,9 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    /// Set *true* for a quick left to right entry animation when the tab bar appears
+    @IBInspectable public var animatesIn: Bool = false
+    
     
     // MARK: - Public properties
     
@@ -281,9 +284,14 @@ private extension CustomTabBar {
         
         let position = frame.size.width / CGFloat(buttons.count) * CGFloat(selectedIndex)
         self.underlinePositionContraint?.constant = position
-        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
-            self.layoutIfNeeded()
+        
+        if animatesIn {
+            UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
+                self.layoutIfNeeded()
             }, completion: nil)
+        } else {
+            self.layoutIfNeeded()
+        }
     }
     
     func updateBackground() {
