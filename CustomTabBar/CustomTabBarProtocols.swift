@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol CustomTabBarPresentable {
+public protocol CustomTabBarPresentable {
     var customTabBar: CustomTabBar { get }
 }
 
-protocol CustomTabBarAdjustible { }
+public protocol CustomTabBarAdjustible { }
 
-extension CustomTabBarAdjustible where Self: UIViewController {
+public extension CustomTabBarAdjustible where Self: UIViewController {
     
     func adjustForCustomTabBar(with scrollView: UIScrollView) {
         guard let tabController = tabBarController as? CustomTabBarPresentable else { return }
