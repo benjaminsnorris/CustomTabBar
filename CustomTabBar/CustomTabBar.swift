@@ -135,7 +135,7 @@ public protocol CustomTabBarDelegate {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        updateTabs()
+        updateTabs(animated: animatesIn)
     }
     
     public override func tintColorDidChange() {
@@ -271,7 +271,7 @@ private extension CustomTabBar {
         }
     }
     
-    func updateTabs() {
+    func updateTabs(animated animated: Bool = true) {
         for button in buttons {
             button.selected = button.index == selectedIndex
             if button.selected {
@@ -285,7 +285,7 @@ private extension CustomTabBar {
         let position = frame.size.width / CGFloat(buttons.count) * CGFloat(selectedIndex)
         self.underlinePositionContraint?.constant = position
         
-        if animatesIn {
+        if animated {
             UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
                 self.layoutIfNeeded()
             }, completion: nil)
