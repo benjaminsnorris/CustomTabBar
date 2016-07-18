@@ -71,6 +71,13 @@ public protocol CustomTabBarDelegate {
         }
     }
     
+    /// Defaults to the tint color
+    @IBInspectable public var selectedTextColor: UIColor? {
+        didSet {
+            updateColors()
+        }
+    }
+    
     /// Override this property if you need to set a specific font
     /// Defaults to 16 without an icon and 10 with
     public var titleFont: UIFont? = nil {
@@ -222,7 +229,7 @@ private extension CustomTabBar {
     func createButton(dataObject: TabDataObject, atIndex index: Int) -> TabButton {
         let button = TabButton(index: index, dataObject: dataObject)
         button.delegate = self
-        button.selectedColor = tintColor
+        button.selectedColor = selectedTextColor ?? tintColor
         button.unselectedColor = textColor
         button.titleFont = titleFont
         stackView.addArrangedSubview(button)
@@ -267,7 +274,7 @@ private extension CustomTabBar {
         underline.backgroundColor = tintColor
         for button in buttons {
             button.unselectedColor = textColor
-            button.selectedColor = tintColor
+            button.selectedColor = selectedTextColor ?? tintColor
         }
     }
     
