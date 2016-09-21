@@ -26,26 +26,26 @@ public struct TabDataObject {
 // MARK: - Custom tab bar protocol and class
 
 public protocol CustomTabBarDelegate {
-    func tabBar(tabBar: CustomTabBar, didSelectTab tab: Int)
+    func tabBar(_ tabBar: CustomTabBar, didSelectTab tab: Int)
 }
 
-@IBDesignable public class CustomTabBar: UIView {
+@IBDesignable open class CustomTabBar: UIView {
     
     // MARK: - Inspectable properties
     
-    @IBInspectable public var selectedIndex: Int = 0 {
+    @IBInspectable open var selectedIndex: Int = 0 {
         didSet {
             updateTabs()
         }
     }
     
-    @IBInspectable public var underlineHeight: CGFloat = 2.0 {
+    @IBInspectable open var underlineHeight: CGFloat = 2.0 {
         didSet {
             underlineHeightConstraint?.constant = underlineHeight
         }
     }
     
-    @IBInspectable public var internalMargin: CGFloat = 0.0 {
+    @IBInspectable open var internalMargin: CGFloat = 0.0 {
         didSet {
             for button in buttons {
                 button.inset = internalMargin
@@ -53,26 +53,26 @@ public protocol CustomTabBarDelegate {
         }
     }
     
-    @IBInspectable public var underlineTop: Bool = false {
+    @IBInspectable open var underlineTop: Bool = false {
         didSet {
             configureVerticalPositions()
         }
     }
     
-    @IBInspectable public var shadowTop: Bool = true {
+    @IBInspectable open var shadowTop: Bool = true {
         didSet {
             configureVerticalPositions()
         }
     }
     
-    @IBInspectable public var textColor: UIColor = UIColor.blackColor() {
+    @IBInspectable open var textColor: UIColor = UIColor.black {
         didSet {
             updateColors()
         }
     }
     
     /// Defaults to the tint color
-    @IBInspectable public var selectedTextColor: UIColor? {
+    @IBInspectable open var selectedTextColor: UIColor? {
         didSet {
             updateColors()
         }
@@ -80,52 +80,52 @@ public protocol CustomTabBarDelegate {
     
     /// Override this property if you need to set a specific font
     /// Defaults to 16 without an icon and 10 with
-    public var titleFont: UIFont? = nil {
+    open var titleFont: UIFont? = nil {
         didSet {
             updateTabs()
         }
     }
     
-    @IBInspectable public var lightBackground: Bool = true {
+    @IBInspectable open var lightBackground: Bool = true {
         didSet {
             updateBackground()
         }
     }
     
     /// Set true for either a light or dark translucent tabBar, false for an opaque tabBar that uses the tabBar's backgroundColor property
-    @IBInspectable public var translucentBackground: Bool = true {
+    @IBInspectable open var translucentBackground: Bool = true {
         didSet {
             updateBackground()
         }
     }
     
     /// Set *true* for a quick left to right entry animation when the tab bar appears
-    @IBInspectable public var animatesIn: Bool = false
+    @IBInspectable open var animatesIn: Bool = false
     
     
     // MARK: - Public properties
     
-    public var dataObjects: [TabDataObject] = [TabDataObject(title: "one", image: nil, accessibilityTitle: "First"), TabDataObject(title: "two", image: nil, accessibilityTitle: "Second")] {
+    open var dataObjects: [TabDataObject] = [TabDataObject(title: "one", image: nil, accessibilityTitle: "First"), TabDataObject(title: "two", image: nil, accessibilityTitle: "Second")] {
         didSet {
             configureTabs()
         }
     }
-    public var delegate: CustomTabBarDelegate?
+    open var delegate: CustomTabBarDelegate?
     
     
     // MARK: - Private properties
     
-    private var lightBackgroundBlur: UIVisualEffectView!
-    private var darkBackgroundBlur: UIVisualEffectView!
-    private let stackView = UIStackView()
-    private var buttons = [TabButton]()
+    fileprivate var lightBackgroundBlur: UIVisualEffectView!
+    fileprivate var darkBackgroundBlur: UIVisualEffectView!
+    fileprivate let stackView = UIStackView()
+    fileprivate var buttons = [TabButton]()
     
-    private let underline = UIView()
-    private var underlineHeightConstraint: NSLayoutConstraint?
-    private var underlineWidthConstraint: NSLayoutConstraint?
-    private var underlinePositionContraint: NSLayoutConstraint?
-    private var underlineTopConstraint: NSLayoutConstraint?
-    private var underlineBottomConstraint: NSLayoutConstraint?
+    fileprivate let underline = UIView()
+    fileprivate var underlineHeightConstraint: NSLayoutConstraint?
+    fileprivate var underlineWidthConstraint: NSLayoutConstraint?
+    fileprivate var underlinePositionContraint: NSLayoutConstraint?
+    fileprivate var underlineTopConstraint: NSLayoutConstraint?
+    fileprivate var underlineBottomConstraint: NSLayoutConstraint?
     
     
     // MARK: - Method overrides
@@ -140,12 +140,12 @@ public protocol CustomTabBarDelegate {
         setupViews()
     }
     
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         updateTabs(animated: animatesIn)
     }
     
-    public override func tintColorDidChange() {
+    open override func tintColorDidChange() {
         updateColors()
     }
     
@@ -156,7 +156,7 @@ public protocol CustomTabBarDelegate {
 
 extension CustomTabBar: TabButtonDelegate {
     
-    func tabButtonTouched(index: Int) {
+    func tabButtonTouched(_ index: Int) {
         selectedIndex = index
         delegate?.tabBar(self, didSelectTab: index)
     }
@@ -169,28 +169,28 @@ extension CustomTabBar: TabButtonDelegate {
 private extension CustomTabBar {
     
     func setupViews() {
-        let lightStyle = UIBlurEffectStyle.ExtraLight
+        let lightStyle = UIBlurEffectStyle.extraLight
         let lightBlurEffect = UIBlurEffect(style: lightStyle)
         lightBackgroundBlur = UIVisualEffectView(effect: lightBlurEffect)
         setupFullSize(lightBackgroundBlur)
         
-        let darkStyle = UIBlurEffectStyle.Dark
+        let darkStyle = UIBlurEffectStyle.dark
         let darkBlurEffect = UIBlurEffect(style: darkStyle)
         darkBackgroundBlur = UIVisualEffectView(effect: darkBlurEffect)
         setupFullSize(darkBackgroundBlur)
         
-        stackView.distribution = .FillEqually
+        stackView.distribution = .fillEqually
         setupFullSize(stackView)
         
         underline.translatesAutoresizingMaskIntoConstraints = false
         addSubview(underline)
-        underlineBottomConstraint = underline.bottomAnchor.constraintEqualToAnchor(bottomAnchor)
-        underlineBottomConstraint?.active = true
-        underlineTopConstraint = underline.topAnchor.constraintEqualToAnchor(topAnchor)
-        underlineHeightConstraint = underline.heightAnchor.constraintEqualToConstant(underlineHeight)
-        underlineHeightConstraint?.active = true
-        underlinePositionContraint = underline.leadingAnchor.constraintEqualToAnchor(leadingAnchor)
-        underlinePositionContraint?.active = true
+        underlineBottomConstraint = underline.bottomAnchor.constraint(equalTo: bottomAnchor)
+        underlineBottomConstraint?.isActive = true
+        underlineTopConstraint = underline.topAnchor.constraint(equalTo: topAnchor)
+        underlineHeightConstraint = underline.heightAnchor.constraint(equalToConstant: underlineHeight)
+        underlineHeightConstraint?.isActive = true
+        underlinePositionContraint = underline.leadingAnchor.constraint(equalTo: leadingAnchor)
+        underlinePositionContraint?.isActive = true
         
         configureTabs()
         configureVerticalPositions()
@@ -202,13 +202,13 @@ private extension CustomTabBar {
         updateBackground()
     }
     
-    func setupFullSize(view: UIView) {
+    func setupFullSize(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor).active = true
-        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor).active = true
-        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
     func configureTabs() {
@@ -217,7 +217,7 @@ private extension CustomTabBar {
         }
         buttons.removeAll()
         
-        for (index, dataObject) in dataObjects.enumerate() {
+        for (index, dataObject) in dataObjects.enumerated() {
             let button = createButton(dataObject, atIndex: index)
             button.selected = button.index == selectedIndex
         }
@@ -226,7 +226,7 @@ private extension CustomTabBar {
 //        accessibilityElements = buttons
     }
     
-    func createButton(dataObject: TabDataObject, atIndex index: Int) -> TabButton {
+    func createButton(_ dataObject: TabDataObject, atIndex index: Int) -> TabButton {
         let button = TabButton(index: index, dataObject: dataObject)
         button.delegate = self
         button.selectedColor = selectedTextColor ?? tintColor
@@ -239,19 +239,19 @@ private extension CustomTabBar {
     
     func configureUnderlineWidth() {
         if let underlineWidthConstraint = underlineWidthConstraint {
-            underlineWidthConstraint.active = false
+            underlineWidthConstraint.isActive = false
         }
-        underlineWidthConstraint = underline.widthAnchor.constraintEqualToAnchor(widthAnchor, multiplier: 1 / CGFloat(buttons.count))
-        underlineWidthConstraint?.active = true
+        underlineWidthConstraint = underline.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1 / CGFloat(buttons.count))
+        underlineWidthConstraint?.isActive = true
     }
     
     func configureVerticalPositions() {
         if underlineTop {
-            underlineBottomConstraint?.active = false
-            underlineTopConstraint?.active = true
+            underlineBottomConstraint?.isActive = false
+            underlineTopConstraint?.isActive = true
         } else {
-            underlineBottomConstraint?.active = true
-            underlineTopConstraint?.active = false
+            underlineBottomConstraint?.isActive = true
+            underlineTopConstraint?.isActive = false
         }
         
         let shadowHeight = 0.5
@@ -267,7 +267,7 @@ private extension CustomTabBar {
         layer.shadowOffset = shadowOffset
         layer.shadowOpacity = 0.2
         layer.shadowRadius = 0.0
-        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowColor = UIColor.black.cgColor
     }
     
     func updateColors() {
@@ -278,7 +278,7 @@ private extension CustomTabBar {
         }
     }
     
-    func updateTabs(animated animated: Bool = true) {
+    func updateTabs(animated: Bool = true) {
         for button in buttons {
             button.selected = button.index == selectedIndex
             if button.selected {
@@ -293,7 +293,7 @@ private extension CustomTabBar {
         self.underlinePositionContraint?.constant = position
         
         if animated {
-            UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
+            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1.0, options: [], animations: { () -> Void in
                 self.layoutIfNeeded()
             }, completion: nil)
         } else {
@@ -302,8 +302,8 @@ private extension CustomTabBar {
     }
     
     func updateBackground() {
-        lightBackgroundBlur.hidden = !lightBackground || !translucentBackground
-        darkBackgroundBlur.hidden = lightBackground || !translucentBackground
+        lightBackgroundBlur.isHidden = !lightBackground || !translucentBackground
+        darkBackgroundBlur.isHidden = lightBackground || !translucentBackground
     }
     
 }
