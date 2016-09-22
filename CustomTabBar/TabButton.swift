@@ -9,7 +9,7 @@
 import UIKit
 
 protocol TabButtonDelegate {
-    func tabButtonTouched(index: Int)
+    func tabButtonTouched(_ index: Int)
 }
 
 class TabButton: UIView {
@@ -25,12 +25,12 @@ class TabButton: UIView {
             updateColors()
         }
     }
-    var unselectedColor: UIColor = .blackColor() {
+    var unselectedColor: UIColor = .black {
         didSet {
             updateColors()
         }
     }
-    var selectedColor: UIColor = .blueColor() {
+    var selectedColor: UIColor = .blue {
         didSet {
             updateColors()
         }
@@ -49,15 +49,15 @@ class TabButton: UIView {
     
     // MARK: - Private properties
     
-    private let stackView = UIStackView()
-    private let imageButton = UIButton()
-    private let titleLabel = UILabel()
-    private let button = UIButton()
+    fileprivate let stackView = UIStackView()
+    fileprivate let imageButton = UIButton()
+    fileprivate let titleLabel = UILabel()
+    fileprivate let button = UIButton()
     
     
     // MARK: - Constants
     
-    private static let margin: CGFloat = 4.0
+    fileprivate static let margin: CGFloat = 4.0
     
     
     // MARK: - Initializers
@@ -65,7 +65,7 @@ class TabButton: UIView {
     init(index: Int, dataObject: TabDataObject) {
         self.index = index
         self.dataObject = dataObject
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         setupViews()
         setupAccessibilityInformation()
     }
@@ -90,36 +90,36 @@ private extension TabButton {
     
     func setupAccessibilityInformation() {
         isAccessibilityElement = true
-        accessibilityLabel = dataObject.accessibilityTitle.capitalizedString
-        accessibilityIdentifier = dataObject.accessibilityTitle.lowercaseString + "TabButton"
+        accessibilityLabel = dataObject.accessibilityTitle.capitalized
+        accessibilityIdentifier = dataObject.accessibilityTitle.lowercased() + "TabButton"
         accessibilityTraits = UIAccessibilityTraitButton
         imageButton.isAccessibilityElement = false
         button.isAccessibilityElement = false
     }
     
     func setupViews() {
-        backgroundColor = .clearColor()
+        backgroundColor = .clear
         
-        stackView.axis = .Vertical
+        stackView.axis = .vertical
         addFullSize(stackView, withMargin: true)
         stackView.spacing = 1.0
         
         if let image = dataObject.image {
             stackView.addArrangedSubview(imageButton)
-            imageButton.setImage(image, forState: .Normal)
-            imageButton.imageView?.contentMode = .ScaleAspectFit
+            imageButton.setImage(image, for: UIControlState())
+            imageButton.imageView?.contentMode = .scaleAspectFit
         }
         if let title = dataObject.title {
             stackView.addArrangedSubview(titleLabel)
             titleLabel.text = title
-            titleLabel.textAlignment = .Center
-            titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: .Vertical)
+            titleLabel.textAlignment = .center
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         }
         
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.9
         
-        button.addTarget(self, action: #selector(buttonTouched), forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: #selector(buttonTouched), for: .touchUpInside)
         addFullSize(button)
         updateColors()
         updateFont()
@@ -134,19 +134,19 @@ private extension TabButton {
         if let titleFont = titleFont {
             titleLabel.font = titleFont
         } else if dataObject.image != nil {
-            titleLabel.font = UIFont.systemFontOfSize(10)
+            titleLabel.font = UIFont.systemFont(ofSize: 10)
         } else {
-            titleLabel.font = UIFont.systemFontOfSize(16)
+            titleLabel.font = UIFont.systemFont(ofSize: 16)
         }
     }
     
-    func addFullSize(view: UIView, withMargin margin: Bool = false) {
+    func addFullSize(_ view: UIView, withMargin margin: Bool = false) {
         addSubview(view)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: margin ? TabButton.margin : 0).active = true
-        view.topAnchor.constraintEqualToAnchor(topAnchor, constant: margin ? TabButton.margin : 0).active = true
-        view.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: margin ? -TabButton.margin : 0).active = true
-        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor, constant: margin ? -TabButton.margin : 0).active = true
+        view.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin ? TabButton.margin : 0).isActive = true
+        view.topAnchor.constraint(equalTo: topAnchor, constant: margin ? TabButton.margin : 0).isActive = true
+        view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: margin ? -TabButton.margin : 0).isActive = true
+        view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: margin ? -TabButton.margin : 0).isActive = true
     }
     
     func updateInsets() {
