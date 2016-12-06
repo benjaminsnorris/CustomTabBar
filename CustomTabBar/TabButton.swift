@@ -75,10 +75,23 @@ class TabButton: UIView {
     }
     
     
-    // MARK: - Button touched
+    // MARK: - Internal functions
+    
+    func highlightButton() {
+        UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [], animations: {
+            self.stackView.alpha = 0.2
+        }, completion: nil)
+    }
+    
+    func resetButton() {
+        UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [], animations: {
+            self.stackView.alpha = 1.0
+        }, completion: nil)
+    }
     
     func buttonTouched() {
         delegate?.tabButtonTouched(index)
+        resetButton()
     }
     
 }
@@ -120,6 +133,9 @@ private extension TabButton {
         titleLabel.minimumScaleFactor = 0.9
         
         button.addTarget(self, action: #selector(buttonTouched), for: .touchUpInside)
+        button.addTarget(self, action: #selector(highlightButton), for: .touchDown)
+        button.addTarget(self, action: #selector(resetButton), for: .touchDragExit)
+        
         addFullSize(button)
         updateColors()
         updateFont()
