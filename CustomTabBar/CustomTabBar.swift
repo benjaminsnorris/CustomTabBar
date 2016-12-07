@@ -16,6 +16,15 @@ public struct TabDataObject {
     public let hideTitle: Bool
     public let identifier: String?
     
+    /**
+     Defines an object to provide rendering data for a `TabButton`
+     
+     - parameters:
+        - title:        Text that will displayed if `hideTitle` is `false`, as well as used as the `accessibilityLabel` of the button
+        - image:        An optional image to display in the button. Providing `nil` causes the button to display the title only
+        - hideTitle:    A flag indicating whether to hide the text and show only the image. (Defaults to `false`)
+        - identifier:   An optional string to be used as the `accessibilityIdentifier`, which can be stable across translations. (Defaults to `nil`)
+     */
     public init(title: String, image: UIImage?, hideTitle: Bool = false, identifier: String? = nil) {
         self.title = title
         self.image = image
