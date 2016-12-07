@@ -11,14 +11,16 @@ import UIKit
 // MARK: - Data object struct
 
 public struct TabDataObject {
-    public let title: String?
+    public let title: String
     public let image: UIImage?
-    public let accessibilityTitle: String
+    public let hideTitle: Bool
+    public let identifier: String?
     
-    public init(title: String?, image: UIImage?, accessibilityTitle: String) {
+    public init(title: String, image: UIImage?, hideTitle: Bool = false, identifier: String? = nil) {
         self.title = title
         self.image = image
-        self.accessibilityTitle = accessibilityTitle
+        self.hideTitle = hideTitle
+        self.identifier = identifier
     }
 }
 
@@ -105,7 +107,7 @@ public protocol CustomTabBarDelegate {
     
     // MARK: - Public properties
     
-    open var dataObjects: [TabDataObject] = [TabDataObject(title: "one", image: nil, accessibilityTitle: "First"), TabDataObject(title: "two", image: nil, accessibilityTitle: "Second")] {
+    open var dataObjects: [TabDataObject] = [TabDataObject(title: "one", image: nil), TabDataObject(title: "two", image: nil)] {
         didSet {
             configureTabs()
         }

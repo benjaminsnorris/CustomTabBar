@@ -103,8 +103,8 @@ private extension TabButton {
     
     func setupAccessibilityInformation() {
         isAccessibilityElement = true
-        accessibilityLabel = dataObject.accessibilityTitle.capitalized
-        accessibilityIdentifier = dataObject.accessibilityTitle.lowercased() + "TabButton"
+        accessibilityLabel = dataObject.title.capitalized
+        accessibilityIdentifier = dataObject.identifier
         accessibilityTraits = UIAccessibilityTraitButton
         imageButton.isAccessibilityElement = false
         button.isAccessibilityElement = false
@@ -122,9 +122,9 @@ private extension TabButton {
             imageButton.setImage(image, for: UIControlState())
             imageButton.imageView?.contentMode = .scaleAspectFit
         }
-        if let title = dataObject.title {
+        if !dataObject.hideTitle {
             stackView.addArrangedSubview(titleLabel)
-            titleLabel.text = title
+            titleLabel.text = dataObject.title
             titleLabel.textAlignment = .center
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
         }
