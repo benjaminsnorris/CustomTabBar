@@ -126,8 +126,7 @@ public protocol CustomTabBarDelegate {
     
     // MARK: - Private properties
     
-    fileprivate var lightBackgroundBlur: UIVisualEffectView!
-    fileprivate var darkBackgroundBlur: UIVisualEffectView!
+    fileprivate var backgroundBlur: UIVisualEffectView!
     fileprivate let stackView = UIStackView()
     fileprivate var buttons = [TabButton]()
     
@@ -182,13 +181,8 @@ private extension CustomTabBar {
     func setupViews() {
         let lightStyle = UIBlurEffectStyle.extraLight
         let lightBlurEffect = UIBlurEffect(style: lightStyle)
-        lightBackgroundBlur = UIVisualEffectView(effect: lightBlurEffect)
-        setupFullSize(lightBackgroundBlur)
-        
-        let darkStyle = UIBlurEffectStyle.dark
-        let darkBlurEffect = UIBlurEffect(style: darkStyle)
-        darkBackgroundBlur = UIVisualEffectView(effect: darkBlurEffect)
-        setupFullSize(darkBackgroundBlur)
+        backgroundBlur = UIVisualEffectView(effect: lightBlurEffect)
+        setupFullSize(backgroundBlur)
         
         stackView.distribution = .fillEqually
         setupFullSize(stackView)
@@ -313,8 +307,9 @@ private extension CustomTabBar {
     }
     
     func updateBackground() {
-        lightBackgroundBlur.isHidden = !lightBackground || !translucentBackground
-        darkBackgroundBlur.isHidden = lightBackground || !translucentBackground
+        let style = lightBackground ? UIBlurEffectStyle.extraLight : .dark
+        let blurEffect = UIBlurEffect(style: style)
+        backgroundBlur.effect = blurEffect
     }
     
 }
