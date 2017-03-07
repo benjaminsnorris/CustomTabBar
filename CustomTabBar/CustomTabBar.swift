@@ -15,6 +15,7 @@ public struct TabDataObject {
     public let image: UIImage?
     public let hideTitle: Bool
     public let identifier: String?
+    public let badgeValue: String?
     
     /**
      Defines an object to provide rendering data for a `TabButton`
@@ -25,11 +26,12 @@ public struct TabDataObject {
         - hideTitle:    A flag indicating whether to hide the text and show only the image. (Defaults to `false`)
         - identifier:   An optional string to be used as the `accessibilityIdentifier`, which can be stable across translations. (Defaults to `nil`)
      */
-    public init(title: String, image: UIImage?, hideTitle: Bool = false, identifier: String? = nil) {
+    public init(title: String, image: UIImage?, hideTitle: Bool = false, identifier: String? = nil, badgeValue: String? = nil) {
         self.title = title
         self.image = image
         self.hideTitle = hideTitle
         self.identifier = identifier
+        self.badgeValue = badgeValue
     }
 }
 
