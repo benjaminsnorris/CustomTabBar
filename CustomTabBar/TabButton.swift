@@ -127,6 +127,7 @@ private extension TabButton {
             titleLabel.text = dataObject.title
             titleLabel.textAlignment = .center
             titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
+            titleLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
         }
         
         titleLabel.adjustsFontSizeToFitWidth = true
