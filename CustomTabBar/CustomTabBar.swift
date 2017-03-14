@@ -90,6 +90,18 @@ public protocol CustomTabBarDelegate {
             updateColors()
         }
     }
+
+    @IBInspectable open var badgeColor: UIColor? {
+        didSet {
+            updateColors()
+        }
+    }
+
+    @IBInspectable open var badgeTextColor: UIColor? {
+        didSet {
+            updateColors()
+        }
+    }
     
     /// Override this property if you need to set a specific font
     /// Defaults to 16 without an icon and 10 with
@@ -282,6 +294,8 @@ private extension CustomTabBar {
         for button in buttons {
             button.unselectedColor = textColor
             button.selectedColor = selectedTextColor ?? tintColor
+            button.badgeColor = badgeColor ?? .red
+            button.badgeTextColor = badgeTextColor ?? .white
         }
     }
     

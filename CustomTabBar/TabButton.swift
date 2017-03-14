@@ -35,6 +35,16 @@ class TabButton: UIView {
             updateColors()
         }
     }
+    var badgeColor: UIColor = .red {
+        didSet {
+            updateBadge()
+        }
+    }
+    var badgeTextColor: UIColor = .white {
+        didSet {
+            updateBadge()
+        }
+    }
     var inset: CGFloat = 0.0 {
         didSet {
             updateInsets()
@@ -169,13 +179,13 @@ private extension TabButton {
         guard let value = dataObject.badgeValue else { badgeLabel.removeFromSuperview(); return }
         badgeLabel.text = value
         badgeLabel.textAlignment = .center
-        badgeLabel.backgroundColor = .red
+        badgeLabel.backgroundColor = badgeColor
         if let badgeFont = badgeFont {
             badgeLabel.font = badgeFont
         } else {
             badgeLabel.font = UIFont.boldSystemFont(ofSize: 12)
         }
-        badgeLabel.textColor = .white
+        badgeLabel.textColor = badgeTextColor
         addBadgeLabel()
     }
 
