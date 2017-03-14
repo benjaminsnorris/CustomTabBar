@@ -35,6 +35,16 @@ class TabButton: UIView {
             updateColors()
         }
     }
+    var badgeColor: UIColor = .red {
+        didSet {
+            updateBadge()
+        }
+    }
+    var badgeTextColor: UIColor = .white {
+        didSet {
+            updateBadge()
+        }
+    }
     var inset: CGFloat = 0.0 {
         didSet {
             updateInsets()
@@ -45,7 +55,12 @@ class TabButton: UIView {
             updateFont()
         }
     }
-    
+    var badgeFont: UIFont? = nil {
+        didSet {
+            updateBadge()
+        }
+    }
+
     
     // MARK: - Private properties
     
@@ -53,11 +68,13 @@ class TabButton: UIView {
     fileprivate let imageButton = UIButton()
     fileprivate let titleLabel = UILabel()
     fileprivate let button = UIButton()
+    fileprivate let badgeLabel = UILabel()
     
     
     // MARK: - Constants
     
     fileprivate static let margin: CGFloat = 4.0
+    fileprivate static var badgeMargin: CGFloat { return margin / 2 }
     
     
     // MARK: - Initializers
@@ -136,10 +153,11 @@ private extension TabButton {
         button.addTarget(self, action: #selector(buttonTouched), for: .touchUpInside)
         button.addTarget(self, action: #selector(highlightButton), for: .touchDown)
         button.addTarget(self, action: #selector(resetButton), for: .touchDragExit)
-        
-        addFullSize(button)
+
         updateColors()
         updateFont()
+        updateBadge()
+        addFullSize(button)
     }
     
     func updateColors() {
@@ -156,7 +174,21 @@ private extension TabButton {
             titleLabel.font = UIFont.systemFont(ofSize: 16)
         }
     }
-    
+
+    func updateBadge() {
+        guard let value = dataObject.badgeValue else { badgeLabel.removeFromSuperview(); return }
+        badgeLabel.text = value
+        badgeLabel.textAlignment = .center
+        badgeLabel.backgroundColor = badgeColor
+        if let badgeFont = badgeFont {
+            badgeLabel.font = badgeFont
+        } else {
+            badgeLabel.font = UIFont.boldSystemFont(ofSize: 12)
+        }
+        badgeLabel.textColor = badgeTextColor
+        addBadgeLabel()
+    }
+
     func addFullSize(_ view: UIView, withMargin margin: Bool = false) {
         addSubview(view)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -164,6 +196,24 @@ private extension TabButton {
         view.topAnchor.constraint(equalTo: topAnchor, constant: margin ? TabButton.margin : 0).isActive = true
         view.trailingAnchor.constraint(equalTo: trailingAnchor, constant: margin ? -TabButton.margin : 0).isActive = true
         view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: margin ? -TabButton.margin : 0).isActive = true
+    }
+
+    func addBadgeLabel() {
+        guard badgeLabel.superview == nil else { return }
+        addSubview(badgeLabel)
+        badgeLabel.translatesAutoresizingMaskIntoConstraints = false
+        if let imageAnchor = imageButton.imageView?.trailingAnchor {
+            badgeLabel.centerXAnchor.constraint(equalTo: imageAnchor, constant: TabButton.badgeMargin).isActive = true
+        } else {
+            badgeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -TabButton.badgeMargin).isActive = true
+        }
+        badgeLabel.topAnchor.constraint(equalTo: topAnchor, constant: TabButton.badgeMargin).isActive = true
+        let badgeHeight = badgeLabel.intrinsicContentSize.height * 1.1
+        let badgeWidth = badgeLabel.intrinsicContentSize.width + badgeHeight / 2
+        badgeLabel.heightAnchor.constraint(equalToConstant: badgeHeight).isActive = true
+        badgeLabel.widthAnchor.constraint(equalToConstant: badgeWidth).isActive = true
+        badgeLabel.layer.cornerRadius = badgeHeight / 2
+        badgeLabel.clipsToBounds = true
     }
     
     func updateInsets() {
