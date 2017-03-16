@@ -323,9 +323,14 @@ private extension CustomTabBar {
     }
     
     func updateBackground() {
-        let style = lightBackground ? UIBlurEffectStyle.extraLight : .dark
-        let blurEffect = UIBlurEffect(style: style)
-        backgroundBlur.effect = blurEffect
+        if translucentBackground {
+            backgroundBlur.alpha = 1.0
+            let style = lightBackground ? UIBlurEffectStyle.extraLight : .dark
+            let blurEffect = UIBlurEffect(style: style)
+            backgroundBlur.effect = blurEffect
+        } else {
+            backgroundBlur.alpha = 0.0
+        }
     }
     
 }
