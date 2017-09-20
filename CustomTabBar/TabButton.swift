@@ -94,19 +94,19 @@ class TabButton: UIView {
     
     // MARK: - Internal functions
     
-    func highlightButton() {
+    @objc func highlightButton() {
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [], animations: {
             self.stackView.alpha = 0.2
         }, completion: nil)
     }
     
-    func resetButton() {
+    @objc func resetButton() {
         UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: [], animations: {
             self.stackView.alpha = 1.0
         }, completion: nil)
     }
     
-    func buttonTouched() {
+    @objc func buttonTouched() {
         delegate?.tabButtonTouched(index)
         resetButton()
     }
@@ -143,8 +143,8 @@ private extension TabButton {
             stackView.addArrangedSubview(titleLabel)
             titleLabel.text = dataObject.title
             titleLabel.textAlignment = .center
-            titleLabel.setContentCompressionResistancePriority(UILayoutPriorityRequired, for: .vertical)
-            titleLabel.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
+            titleLabel.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
+            titleLabel.setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         }
         
         titleLabel.adjustsFontSizeToFitWidth = true
