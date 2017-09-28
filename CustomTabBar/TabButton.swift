@@ -202,7 +202,7 @@ private extension TabButton {
         guard badgeLabel.superview == nil else { return }
         addSubview(badgeLabel)
         badgeLabel.translatesAutoresizingMaskIntoConstraints = false
-        if let imageAnchor = imageButton.imageView?.trailingAnchor {
+        if let imageAnchor = imageButton.imageView?.trailingAnchor, imageButton.imageView?.image != nil {
             badgeLabel.centerXAnchor.constraint(equalTo: imageAnchor, constant: TabButton.badgeMargin).isActive = true
         } else {
             badgeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -TabButton.badgeMargin).isActive = true
